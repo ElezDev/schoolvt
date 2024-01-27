@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:vtschool/config/fonts_styles.dart';
 import 'package:vtschool/controllers/perfil_controller.dart';
+import 'package:vtschool/models/student.dart';
 import 'package:vtschool/models/user_new_data.dart';
 import 'package:vtschool/models/user_profile_model.dart';
 import 'package:vtschool/screens/inicio/card_screen.dart';
+import 'package:vtschool/screens/notas/Student_notas.dart';
+import 'package:vtschool/screens/notas/Task.dart';
+import 'package:vtschool/screens/profile/prueba.dart';
 
 class PrincipalScreen extends StatefulWidget {
   const PrincipalScreen({super.key});
@@ -14,14 +18,28 @@ class PrincipalScreen extends StatefulWidget {
   State<PrincipalScreen> createState() => _PrincipalScreenState();
 }
 
-class _PrincipalScreenState extends State<PrincipalScreen> {
+class _PrincipalScreenState extends State<PrincipalScreen> with SingleTickerProviderStateMixin {
   UserData? userProfile;
   bool isLoading = true;
   final ProfileController _profileController = ProfileController();
+  late TabController _tabController;
+      Student student = Student('Juan', [
+      Grade('Matemáticas', 90.0),
+      Grade('Historia', 85.0),
+      Grade('Ciencias', 95.0),
+    ]);
+
+      List<Task> tasks = [
+      Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
+      Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
+      Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
+    ];
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    
     Future.delayed(
       const Duration(seconds: 2),
       () {
@@ -36,32 +54,13 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
       isLoading = loading;
     });
   }
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.dashboard_rounded,
-                    color: Colors.blue,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search_rounded,
-                    color: Colors.blue,
-                  ),
-                )
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -88,95 +87,49 @@ class _PrincipalScreenState extends State<PrincipalScreen> {
                                   image: AssetImage('assets/images/avatar.png'),
                                   fit: BoxFit.cover,
                                   repeat: ImageRepeat.repeat),
-                              borderRadius: BorderRadius.circular(
-                                10,
-                              ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           )
                         ],
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                  const SizedBox(height: 20),
+                  TabBar(
+                    controller: _tabController,
+                    tabs: [
+                      Tab(text: 'Mi agenda'),
+                      Tab(text: 'Mis notas'),
+                      Tab(text: 'Mis tareas'),
+                    ],
                   ),
-                  const Categorieas(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const MinInfo(),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  CardContainer(),
                 ],
               ),
-            )
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        const SizedBox(height: 20),
+                        const SizedBox(height: 20),
+                        CardContainer(),
+                      ],
+                    ),
+                  ),
+                  // Second Tab - User Data Widget
+                   GradeSimulationScreen(student),
+                    TaskScreen(tasks) // You need to create UserDataWidget and pass userProfile
+                ],
+              ),
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class MinInfo extends StatelessWidget {
-  const MinInfo({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'categorias',
-          style: kTlightproMax,
-        ),
-        InkWell(
-          onTap: () {},
-          child: Text(
-            'Todo',
-            style: kTlightproMax,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class Categorieas extends StatelessWidget {
-  const Categorieas({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          decoration: BoxDecoration(
-              color: Colors.green, borderRadius: BorderRadius.circular(10)),
-          child: const Text(
-            'Top',
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          child: const Text(
-            'Otro',
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          child: const Text(
-            'Otro',
-          ),
-        ),
-        SizedBox(height: 20, child: Image.asset('assets/images/enviar.png'))
-      ],
     );
   }
 }

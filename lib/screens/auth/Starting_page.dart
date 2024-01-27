@@ -1,9 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:get/get.dart';
+
 
 import '../../config/fonts_styles.dart';
 
@@ -25,7 +24,7 @@ class _StartingScreenState extends State<StartingScreen> {
 
   void _initializeScreen() async {
     // ignore: use_build_context_synchronously
-    context.go('/login');
+     Get.toNamed('/login');
   }
 
   @override
@@ -76,7 +75,7 @@ class _StartingScreenState extends State<StartingScreen> {
                 const SizedBox(height: 90),
                 ElevatedButton(
                   onPressed: () {
-                    context.push('/login');
+                    Get.toNamed('/login');
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

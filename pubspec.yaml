@@ -65,6 +65,8 @@ dependencies:
   firebase_messaging: ^14.7.5
   firebase_core: ^2.23.0
   intl: ^0.18.1
+  fluttertoast: ^8.2.4
+  table_calendar: ^3.0.9
 
 
 

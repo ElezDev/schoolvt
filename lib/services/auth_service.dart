@@ -163,35 +163,27 @@ String? getStringImage(File? file) {
   return base64Encode(file.readAsBytesSync());
 }
 
-  final String apiUrl = 'http://192.168.101.9:8000/api/auth/user_data';
-
-Future<ApiResponse> getProfile() async {
+  Future<ApiResponse> getProfile() async {
   ApiResponse apiResponse = ApiResponse();
-  final url = Uri.parse(apiUrl);
-
-    try {
-      String token = await getToken();
-
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
+  try {
+    String token = await getToken();
+    final response = await http.get(Uri.parse('${baseURL}auth/user_data'), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
     switch (response.statusCode) {
       case 200:
         apiResponse.data = UserData.fromJson(jsonDecode(response.body));
-        print(response.body);
         break;
       case 401:
         apiResponse.error = 'Unauthorized';
         break;
       default:
-        apiResponse.error = 'Algo salió mal';
+        apiResponse.error = 'Something went wrong';
         break;
     }
   } catch (e) {
-    apiResponse.error = 'Error del servidor';
+    apiResponse.error = 'Server error';
   }
 
   return apiResponse;

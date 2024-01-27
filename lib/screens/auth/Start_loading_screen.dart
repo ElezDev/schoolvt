@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../api/constant.dart';
@@ -31,15 +32,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void _loadUserInfo() async {
     String token = await getToken();
     if (token == '') {
-      context.push('/starting');
+        //Get.toNamed('/starting');
+        Get.offAllNamed('/starting');
     } else {
       ApiResponse response = await getProfile();
       if (response.error == null) {
-        context.go('/home');
+        Get.offAllNamed('/home');
       } else if (response.error == unauthorized) {
-        context.push('/login');
+         Get.toNamed('/login');
       } else {
-        context.go('/home');
+          Get.offAllNamed('/home');
       }
     }
   }

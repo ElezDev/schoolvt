@@ -8,7 +8,8 @@ import 'package:vtschool/models/api_response_model.dart';
 import 'package:vtschool/models/auth_user_model.dart';
 import 'package:vtschool/services/auth_service.dart';
 import 'package:vtschool/widgets/alert.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,7 +19,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
@@ -29,17 +29,24 @@ class _LoginScreenState extends State<LoginScreen> {
     ApiResponse response = await login(txtEmail.text, txtPassword.text);
 
     if (response.error == null) {
-      Alert.snacbarSuccess(
-          context: context, title: '¡Bienvenido!', message: '');
+      Get.snackbar(
+        'Hola!',
+        'Un gusto tenerte nuevamente!',
+      );
+
       setState(() {
         loading = true;
       });
       _saveAndRedirectToHome(response.data as UserAuth);
     } else {
-      Alert.snacbarError(
-          context: context,
-          title: 'Error',
-          message: 'Correo o contraseña incorrectos');
+      Fluttertoast.showToast(
+        msg: 'Correo o contraseña incorrectos',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.transparent,
+        textColor: Colors.white,
+      );
+
       setState(() {
         loading = false;
       });
@@ -52,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
     await pref.setString('email', txtEmail.text);
     await pref.setString('contrasena', txtPassword.text);
 
-    context.go('/home');
+    Get.toNamed('/home');
   }
 
   void _loadSavedCredentials() async {
@@ -84,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Opacity(
                   opacity: 0.6,
                   child: Image.asset(
-                    "assets/images/taxi_login.jpeg",
+                    "assets/images/chica.png",
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -173,25 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20,
                           ),
                           loading
-                              ? AlertDialog(
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: Center(
-                                          child: Image.asset(
-                                              "assets/animations/logo-3.gif"),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 15.0),
-                                      const Text(
-                                        'Iniciando sesión...',
-                                        style: kTlightpromin,
-                                      ),
-                                    ],
-                                  ),
+                              ? Center(
+                                  child: CircularProgressIndicator(),
                                 )
                               : ElevatedButton(
                                   onPressed: () {
@@ -210,8 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     side: const BorderSide(
-                                      color: Colors
-                                          .grey,
+                                      color: Colors.grey,
                                       width: 1.0,
                                     ),
                                   ),

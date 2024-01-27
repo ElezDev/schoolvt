@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vtschool/config/fonts_styles.dart';
 import 'package:vtschool/services/auth_service.dart';
@@ -39,6 +40,8 @@ Future<void> logoutApp(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('token');
 
-  context.pop();
-  context.go('/login');
+  Get.back();
+
+  Get.offAllNamed(
+      '/login'); // o Get.toNamed('/login') dependiendo de tus necesidades
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vtschool/controllers/perfil_controller.dart';
 import 'package:vtschool/models/user_new_data.dart';
@@ -82,8 +83,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        context.pop();
-                        context.push('/update_profile');
+                        Get.back();
+                        Get.toNamed('/update_profile');
                       },
                       child: const Row(
                         children: [
@@ -99,7 +100,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      context.pop();
+                       Get.back();
                       logoutApp(context);
                     },
                     child: const Row(
