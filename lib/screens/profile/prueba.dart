@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:vtschool/services/auth_service.dart';
 
 class UserDataWidget extends StatefulWidget {
+  const UserDataWidget({super.key});
+
   @override
   _UserDataWidgetState createState() => _UserDataWidgetState();
 }
@@ -50,7 +52,7 @@ class _UserDataWidgetState extends State<UserDataWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Data'),
+        title: const Text('User Data'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

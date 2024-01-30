@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:vtschool/controllers/perfil_controller.dart';
-import 'package:vtschool/models/user_new_data.dart';
 import 'package:vtschool/models/user_profile_model.dart';
 import 'package:vtschool/provider/theme_dark_or_light.dart';
 import 'package:vtschool/screens/profile/logout_screen.dart';
@@ -40,7 +38,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 234, 231, 71),
         elevation: 0,
         title: const Center(
           child: Text(
@@ -49,76 +46,76 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           ),
         ),
       ),
-      endDrawer: Drawer(
-        width: 230,
-        elevation: 0,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-                padding: const EdgeInsets.only(top: 90, left: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: const Color.fromARGB(255, 234, 231, 71),
-                ),
-                child: const Row(
-                  children: [
-                    Text('Ajustes', style: kTitleStylew),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(Icons.settings)
-                  ],
-                )),
-            Container(
-              margin: const EdgeInsets.all(12),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const IconThemoMode(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                        Get.toNamed('/update_profile');
-                      },
-                      child: const Row(
-                        children: [
-                          Icon(Icons.settings),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('Actualizar Perfil'),
-                        ],
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                       Get.back();
-                      logoutApp(context);
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.logout_outlined),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Cerrar sesión'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      // endDrawer: Drawer(
+      //   width: 230,
+      //   elevation: 0,
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       DrawerHeader(
+      //           padding: const EdgeInsets.only(top: 90, left: 20),
+      //           decoration: BoxDecoration(
+      //             borderRadius: BorderRadius.circular(15),
+      //             color: const Color.fromARGB(255, 234, 231, 71),
+      //           ),
+      //           child: const Row(
+      //             children: [
+      //               Text('Ajustes', style: kTitleStylew),
+      //               SizedBox(
+      //                 width: 5,
+      //               ),
+      //               Icon(Icons.settings)
+      //             ],
+      //           )),
+      //       Container(
+      //         margin: const EdgeInsets.all(12),
+      //         child: Column(
+      //           children: [
+      //             const SizedBox(
+      //               height: 10,
+      //             ),
+      //             const IconThemoMode(),
+      //             const SizedBox(
+      //               height: 10,
+      //             ),
+      //             ElevatedButton(
+      //                 onPressed: () {
+      //                   Get.back();
+      //                   Get.toNamed('/update_profile');
+      //                 },
+      //                 child: const Row(
+      //                   children: [
+      //                     Icon(Icons.settings),
+      //                     SizedBox(
+      //                       width: 5,
+      //                     ),
+      //                     Text('Actualizar Perfil'),
+      //                   ],
+      //                 )),
+      //             const SizedBox(
+      //               height: 10,
+      //             ),
+      //             ElevatedButton(
+      //               onPressed: () {
+      //                  Get.back();
+      //                 logoutApp(context);
+      //               },
+      //               child: const Row(
+      //                 children: [
+      //                   Icon(Icons.logout_outlined),
+      //                   SizedBox(
+      //                     width: 5,
+      //                   ),
+      //                   Text('Cerrar sesión'),
+      //                 ],
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: Container(
         child: isLoading
             ? const Center(
@@ -130,7 +127,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     width: double.infinity,
                     height: 250,
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 234, 231, 71),
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(40),
                         bottomLeft: Radius.circular(40),

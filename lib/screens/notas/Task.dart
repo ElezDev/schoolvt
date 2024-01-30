@@ -4,13 +4,13 @@ import 'package:vtschool/models/student.dart';
 class TaskScreen extends StatelessWidget {
   final List<Task> tasks;
 
-  TaskScreen(this.tasks);
+  const TaskScreen(this.tasks, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tareas Pendientes'),
+        title: const Text('Tareas Pendientes'),
       ),
       body: ListView.builder(
         itemCount: tasks.length,

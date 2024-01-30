@@ -28,7 +28,7 @@ class UserDataClass {
     int id;
     String email;
     int idPersona;
-    DateTime emailVerifiedAt;
+    DateTime? emailVerifiedAt;
     Persona persona;
 
     UserDataClass({
@@ -39,19 +39,23 @@ class UserDataClass {
         required this.persona,
     });
 
-    factory UserDataClass.fromJson(Map<String, dynamic> json) => UserDataClass(
-        id: json["id"],
-        email: json["email"],
-        idPersona: json["idPersona"],
-        emailVerifiedAt: DateTime.parse(json["email_verified_at"]),
-        persona: Persona.fromJson(json["persona"]),
-    );
+ factory UserDataClass.fromJson(Map<String, dynamic> json) {
+  return UserDataClass(
+    id: json["id"],
+    email: json["email"],
+    idPersona: json["idPersona"],
+    emailVerifiedAt: json["email_verified_at"] != null
+        ? DateTime.parse(json["email_verified_at"])
+        : null,
+    persona: Persona.fromJson(json["persona"]),
+  );
+}
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
         "idPersona": idPersona,
-        "email_verified_at": emailVerifiedAt.toIso8601String(),
+        "email_verified_at": emailVerifiedAt?.toIso8601String(),
         "persona": persona.toJson(),
     };
 }

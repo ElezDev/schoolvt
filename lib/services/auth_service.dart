@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:vtschool/api/constant.dart';
 import 'package:vtschool/models/api_response_model.dart';
 import 'package:vtschool/models/auth_user_model.dart';
-import 'package:vtschool/models/user_new_data.dart';
 import 'package:vtschool/models/user_profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

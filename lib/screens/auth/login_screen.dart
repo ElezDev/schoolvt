@@ -7,7 +7,6 @@ import 'package:vtschool/config/fonts_styles.dart';
 import 'package:vtschool/models/api_response_model.dart';
 import 'package:vtschool/models/auth_user_model.dart';
 import 'package:vtschool/services/auth_service.dart';
-import 'package:vtschool/widgets/alert.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -180,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20,
                           ),
                           loading
-                              ? Center(
+                              ? const Center(
                                   child: CircularProgressIndicator(),
                                 )
                               : ElevatedButton(

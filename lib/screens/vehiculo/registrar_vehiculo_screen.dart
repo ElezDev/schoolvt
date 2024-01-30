@@ -6,6 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vtschool/services/auth_service.dart';
 
 class VehiculoForm extends StatefulWidget {
+  const VehiculoForm({super.key});
+
   @override
   _VehiculoFormState createState() => _VehiculoFormState();
 }
@@ -53,7 +55,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
 
         // Mostrar el AlertDialog si el registro fue exitoso
         if (response.statusCode == 200) {
-          await Future.delayed(Duration(seconds: 4));
+          await Future.delayed(const Duration(seconds: 4));
           _showSuccessDialog();
         } else {
           // Mostrar SnackBar en caso de error
@@ -72,14 +74,14 @@ class _VehiculoFormState extends State<VehiculoForm> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Registro Exitoso'),
-          content: Text('El vehículo se ha registrado con éxito.'),
+          title: const Text('Registro Exitoso'),
+          content: const Text('El vehículo se ha registrado con éxito.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
             ),
           ],
         );
@@ -91,7 +93,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(errorMessage),
-        duration: Duration(seconds: 4),
+        duration: const Duration(seconds: 4),
         backgroundColor: Colors.red,
       ),
     );
@@ -113,7 +115,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulario de Vehículo'),
+        title: const Text('Formulario de Vehículo'),
         backgroundColor: Colors.teal,
       ),
       body: Padding(
@@ -125,7 +127,7 @@ class _VehiculoFormState extends State<VehiculoForm> {
             children: [
               TextFormField(
                 controller: placaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Placa',
                   icon: Icon(Icons.directions_car),
                 ),
@@ -136,10 +138,10 @@ class _VehiculoFormState extends State<VehiculoForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               TextFormField(
                 controller: colorController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Color',
                   icon: Icon(Icons.color_lens),
                 ),
@@ -150,10 +152,10 @@ class _VehiculoFormState extends State<VehiculoForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               TextFormField(
                 controller: modeloController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Modelo',
                   icon: Icon(Icons.confirmation_number),
                 ),
@@ -164,10 +166,10 @@ class _VehiculoFormState extends State<VehiculoForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               TextFormField(
                 controller: marcaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Marca',
                   icon: Icon(Icons.branding_watermark),
                 ),
@@ -178,12 +180,12 @@ class _VehiculoFormState extends State<VehiculoForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               ElevatedButton(
                 onPressed: _pickImage,
-                child: Text('Seleccionar Foto'),
+                child: const Text('Seleccionar Foto'),
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               _imageSelected
                   ? Container(
                       height: 100.0,
@@ -197,15 +199,15 @@ class _VehiculoFormState extends State<VehiculoForm> {
                       ),
                     )
                   : Container(),
-              SizedBox(height: 1.0),
+              const SizedBox(height: 1.0),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                ),
+                child: const Text(
                   'Enviar',
                   style: TextStyle(fontSize: 18.0),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.teal,
                 ),
               ),
             ],

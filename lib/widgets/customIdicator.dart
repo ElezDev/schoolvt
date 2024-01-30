@@ -4,7 +4,7 @@ class CustomTabIndicator extends Decoration {
   final double indicatorSize;
   final Color color;
 
-  CustomTabIndicator({required this.indicatorSize, required this.color});
+  const CustomTabIndicator({required this.indicatorSize, required this.color});
 
   @override
   _CustomPainter createBoxPainter([VoidCallback? onChanged]) {
@@ -23,7 +23,7 @@ class _CustomPainter extends BoxPainter {
     final Paint paint = Paint()..color = decoration.color;
 
     final double indicatorWidth = rect.width * decoration.indicatorSize;
-    final double indicatorHeight = 2.0; // Altura de la barra
+    const double indicatorHeight = 2.0; // Altura de la barra
 
     final Rect indicatorRect = Rect.fromPoints(
       Offset(rect.left + (rect.width - indicatorWidth) / 2, rect.bottom - indicatorHeight),

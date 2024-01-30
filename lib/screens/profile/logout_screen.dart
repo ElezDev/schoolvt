@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:vtschool/config/fonts_styles.dart';
 import 'package:vtschool/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';

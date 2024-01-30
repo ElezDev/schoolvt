@@ -4,7 +4,7 @@ import 'package:vtschool/models/student.dart';
 class GradeSimulationScreen extends StatelessWidget {
   final Student student;
 
-  GradeSimulationScreen(this.student);
+  const GradeSimulationScreen(this.student, {super.key});
 
   @override
   Widget build(BuildContext context) {
