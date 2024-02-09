@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Opacity(
                   opacity: 0.6,
                   child: Image.asset(
-                    "assets/images/chica.png",
+                    "assets/images/scl2.jpg",
                     fit: BoxFit.fill,
                   ),
                 ),

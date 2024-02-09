@@ -49,12 +49,14 @@ class _PrincipalScreenState extends State<PrincipalScreen>
       },
     );
   }
+  
 
   void getProfileData(UserData? profile, bool loading) {
     setState(() {
       userProfile = profile;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,9 @@ class _PrincipalScreenState extends State<PrincipalScreen>
             ListTile(
               title: const Text('Medallero'),
               leading: const Icon(Icons.emoji_events), // Icono de logout
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/banner');
+              },
             ),
             ListTile(
               title: const Text('Cerrar sesión'),

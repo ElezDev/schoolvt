@@ -7,6 +7,7 @@ import 'package:vtschool/screens/auth/Start_loading_screen.dart';
 import 'package:vtschool/screens/auth/Starting_page.dart';
 import 'package:vtschool/screens/auth/login_screen.dart';
 import 'package:vtschool/screens/auth/register_screen.dart';
+import 'package:vtschool/screens/banner/banner.dart';
 import 'package:vtschool/screens/inicio/home_screen.dart';
 import 'package:vtschool/screens/profile/myprofile_screen.dart';
 import 'package:vtschool/screens/profile/update_profile_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends ConsumerWidget {
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile_view', page: () => const MyProfileScreen()),
         GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
+        GetPage(name: '/banner', page: () => const BannerScreen()),
 
       ],
       initialRoute: '/loading',

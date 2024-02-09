@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../../config/fonts_styles.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -40,8 +39,8 @@ class _StartingScreenState extends State<StartingScreen> {
               height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width,
               child: Image.asset(
-                'assets/images/conlogo3.png',
-                fit: BoxFit.cover,
+                'assets/images/chica2.png',
+                width: 100,
               ),
             ),
           ),
@@ -56,12 +55,11 @@ class _StartingScreenState extends State<StartingScreen> {
                   text: const TextSpan(
                     children: [
                       TextSpan(
-                        text: '¡Bienvenido ',
+                        text: '  ¡Bienvenido ',
                         style: kTitleStylew,
                       ),
                       TextSpan(
-                        text:
-                            'A Teletaxi Tu Mejor \n   Alternativa En Transportes ',
+                        text: ' A  School tú \n  nuevo compañero escolar😉',
                         style: kTitleStylewAmber,
                       ),
                     ],
@@ -69,7 +67,7 @@ class _StartingScreenState extends State<StartingScreen> {
                 ),
                 const SizedBox(height: 15), // Espaciador
                 const Text(
-                  'Descubre una nueva forma de moverte',
+                  'Has tú educación mas divertida!! ',
                   style: kTlightpromin,
                 ),
                 const SizedBox(height: 90),
@@ -85,7 +83,7 @@ class _StartingScreenState extends State<StartingScreen> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 120.0),
                   ),
-                  child: const Text('Let\'s go'),
+                  child: const Text('Vamos'),
                 ),
               ],
             ),
@@ -94,8 +92,6 @@ class _StartingScreenState extends State<StartingScreen> {
       ),
     );
   }
-
-
 }
 
 class OvalClipper extends CustomClipper<Path> {
