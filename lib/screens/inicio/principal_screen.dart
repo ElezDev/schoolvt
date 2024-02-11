@@ -49,7 +49,6 @@ class _PrincipalScreenState extends State<PrincipalScreen>
       },
     );
   }
-  
 
   void getProfileData(UserData? profile, bool loading) {
     setState(() {
@@ -57,19 +56,28 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 247, 233, 106),
       appBar: AppBar(
         title: const Text(''),
+        backgroundColor: Color.fromARGB(255, 247, 233, 106),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Colors.grey,
+                color: Color.fromARGB(255, 247, 230, 76),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +96,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                   ),
                   const SizedBox(height: 9),
                   Text(
-                    '${userProfile?.userData.email}', // Aquí accedes al correo del usuario
+                    '${userProfile?.userData.email}', 
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -125,7 +133,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
               child: Column(
                 children: [
                   Row(
-                    children:  [
+                    children: [
                       Column(
                         children: [
                           if (userProfile == null)
@@ -160,14 +168,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                     ],
                   ),
                   const SizedBox(height: 20),
-                  TabBar(
-                    controller: _tabController,
-                    tabs: const [
-                      Tab(text: 'Mi agenda'),
-                      Tab(text: 'Mis notas'),
-                      Tab(text: 'Mis tareas'),
-                    ],
-                  ),
+                  TabBarWidget(tabController: _tabController),
                 ],
               ),
             ),
@@ -182,7 +183,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                         SizedBox(height: 20),
                         SizedBox(height: 20),
                         SizedBox(height: 20),
-                        CardContainer(),
+                        Calendar(),
                       ],
                     ),
                   ),
@@ -200,6 +201,34 @@ class _PrincipalScreenState extends State<PrincipalScreen>
           ],
         ),
       ),
+    );
+  }
+}
+
+class TabBarWidget extends StatelessWidget {
+  const TabBarWidget({
+    super.key,
+    required TabController tabController,
+  }) : _tabController = tabController;
+
+  final TabController _tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      dividerColor: Colors.white,
+      controller: _tabController,
+      tabs: const [
+        Tab(text: 'Agenda'),
+        Tab(text: 'Mis notas'),
+        Tab(text: 'Mis tareas'),
+      ],
+      labelColor:
+          Colors.black, 
+      unselectedLabelColor:
+          Colors.grey, 
+      labelStyle: kTlight, 
+      unselectedLabelStyle: kTlight
     );
   }
 }

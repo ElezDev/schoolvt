@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:vtschool/config/theme/app_theme.dart';
 import 'package:vtschool/provider/theme_dark_or_light.dart';
-import 'package:get/get.dart';
 import 'package:vtschool/screens/auth/Start_loading_screen.dart';
 import 'package:vtschool/screens/auth/Starting_page.dart';
 import 'package:vtschool/screens/auth/login_screen.dart';
@@ -26,21 +27,35 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkmode = ref.watch(isDarkmodeProvider);
 
-    return GetMaterialApp(
+    return MaterialApp(
+      title: 'Tu Aplicación',
       theme: AppTheme(selectedColor: 3, isDarkMode: isDarkmode).getTheme(),
       debugShowCheckedModeBanner: false,
-      getPages: [
-        GetPage(name: '/loading', page: () => const LoadingScreen()),
-        GetPage(name: '/starting', page: () => const StartingScreen()),
-        GetPage(name: '/login', page: () => const LoginScreen()),
-        GetPage(name: '/register', page: () => const RegisterScreen()),
-        GetPage(name: '/home', page: () => const HomeScreen()),
-        GetPage(name: '/profile_view', page: () => const MyProfileScreen()),
-        GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
-        GetPage(name: '/banner', page: () => const BannerScreen()),
-
+      localizationsDelegates: [
+        // Agrega los delegados de localización necesarios aquí
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
       ],
-      initialRoute: '/loading',
+      supportedLocales: [
+        const Locale('es', ''), // Establecer el idioma de la aplicación a español
+        
+      ],
+      home: GetMaterialApp(
+        theme: AppTheme(selectedColor: 3, isDarkMode: isDarkmode).getTheme(),
+        debugShowCheckedModeBanner: false,
+        getPages: [
+          GetPage(name: '/loading', page: () => const LoadingScreen()),
+          GetPage(name: '/starting', page: () => const StartingScreen()),
+          GetPage(name: '/login', page: () => const LoginScreen()),
+          GetPage(name: '/register', page: () => const RegisterScreen()),
+          GetPage(name: '/home', page: () => const HomeScreen()),
+          GetPage(name: '/profile_view', page: () => const MyProfileScreen()),
+          GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
+          GetPage(name: '/banner', page: () => const BannerScreen()),
+        ],
+        initialRoute: '/loading',
+      ),
     );
   }
 }

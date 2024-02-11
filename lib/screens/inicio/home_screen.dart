@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:vtschool/screens/inicio/card_screen.dart';
 import '../profile/myprofile_screen.dart';
 import 'principal_screen.dart';
 
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const PrincipalScreen(),
-    const MyProfileScreen(),
+     MyProfileScreen(),
   ];
 
   @override
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBar(
       iconSize: 25,
       currentIndex: _selectedIndex,
-      selectedItemColor: const Color.fromARGB(255, 11, 179, 36),
+      selectedItemColor: const Color.fromARGB(255, 247, 233, 106),
       unselectedItemColor: Colors.black,
       backgroundColor: Colors.white.withOpacity(1.0),
       onTap: (index) {
@@ -44,11 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(LineIcons.home),
-          label: 'Home',
+          label: 'Inicio',
         ),
         BottomNavigationBarItem(
           icon: Icon(LineIcons.user),
-          label: 'Profile',
+          label: 'Perfil',
         ),
       ],
     );

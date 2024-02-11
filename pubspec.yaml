@@ -60,6 +60,8 @@ dependencies:
   fluttertoast: ^8.2.4
   table_calendar: ^3.0.9
   popup_banner: ^1.0.0
+  wompi_payment_colombia: ^1.0.1
+  syncfusion_flutter_calendar: ^24.2.4
 
 
 
