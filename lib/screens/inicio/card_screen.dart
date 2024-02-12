@@ -21,23 +21,43 @@ class _CalendarState extends State<Calendar> {
   }
 
   Future<void> _fetchEvents() async {
-    const url = 'http://192.168.101.9:8000/api/materias/horario_materia';
+    String url = 'http://192.168.101.9:8000/api/materias/horario_materia';
     String token = await getToken();
+    Map<String, dynamic> requestData = {
+      'idPrograma': 2,
+      'relations': [
+        'infraestructura.sede',
+        'dia',
+        'materia.materia',
+        'materia.grado.programa'
+      ]
+    };
+    Uri uri = Uri.parse(url);
+    Uri requestUri = uri
+        .replace(queryParameters: {'data_encoded': json.encode(requestData)});
+
     final response = await http.get(
-      Uri.parse(url),
+      requestUri,
       headers: {
         'Authorization': 'Bearer $token',
         'accept': 'application/json',
       },
     );
+
     if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      final List<Map<String, dynamic>> events =
-          List<Map<String, dynamic>>.from(decodedData);
-      setState(() {
-        _hourlyEvents = events;
-      });
+      if (response.body.isNotEmpty) {
+        final List<dynamic> decodedData = json.decode(response.body);
+        final List<Map<String, dynamic>> events =
+            List<Map<String, dynamic>>.from(decodedData);
+        setState(() {
+          _hourlyEvents = events;
+        });
+        print(_hourlyEvents);
+      } else {
+        print('La respuesta del servidor está vacía.');
+      }
     } else {
+      print('Error: ${response.statusCode}');
       throw Exception('Failed to load events');
     }
   }
@@ -52,41 +72,10 @@ class _CalendarState extends State<Calendar> {
           title: const Text('Horario 📆📌'),
         ),
         body: SfCalendar(
-           headerDateFormat: 'dd-MMM-yyy',
           view: CalendarView.day,
           dataSource: _getDataSource(),
-          appointmentBuilder: appointmentBuilder,
-          onTap: (CalendarTapDetails details) {
-            if (details.appointments != null &&
-                details.appointments!.isNotEmpty) {
-              _showEventDetails(details.appointments!.first);
-            }
-          },
+          onTap: _onTap,
         ),
-      ),
-    );
-  }
-
-  void _showEventDetails(Appointment appointment) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text('Detalles del evento'),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Materia: ${appointment.subject}'),
-            Text('Hora Inicial: ${appointment.startTime}'),
-            Text('Hora Final: ${appointment.endTime}'),
-            // Agrega más detalles según tu modelo de datos
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('Cerrar'),
-          ),
-        ],
       ),
     );
   }
@@ -101,8 +90,9 @@ class _CalendarState extends State<Calendar> {
       appointments.add(Appointment(
         startTime: startTime,
         endTime: endTime,
-        subject: 'Materia ${event["id"]}',
+        subject: '${event["materia"]["materia"]["nombreMateria"]}',
         color: _getEventColor(event["estado"]),
+        id: event["id"].toString(),
       ));
     }
 
@@ -118,19 +108,36 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  Widget appointmentBuilder(
-      BuildContext context, CalendarAppointmentDetails details) {
-    final Appointment appointment = details.appointments!.first;
-    return Container(
-      decoration: BoxDecoration(
-        color: appointment.color,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Center(
-        child: Text(
-          appointment.subject,
-          style: TextStyle(color: Colors.white),
+  void _onTap(CalendarTapDetails details) {
+    if (details.targetElement == CalendarElement.appointment) {
+      final selectedEventId = details.appointments!.first.id;
+      final selectedEvent = _hourlyEvents
+          .firstWhere((event) => event["id"].toString() == selectedEventId);
+      _showEventDetails(selectedEvent);
+    }
+  }
+
+  void _showEventDetails(Map<String, dynamic> event) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Detalle'),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Materia: ${event["materia"]["materia"]["nombreMateria"]}'),
+            Text('Sede: ${event["infraestructura"]["sede"]["nombreSede"]}'),
+            Text('Hora Inicial: ${event["horaInicial"]}'),
+            Text('Hora Final: ${event["horaFinal"]}'),
+          ],
         ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Cerrar'),
+          ),
+        ],
       ),
     );
   }
