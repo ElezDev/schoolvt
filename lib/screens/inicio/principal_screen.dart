@@ -11,6 +11,7 @@ import 'package:vtschool/screens/inicio/card_screen.dart';
 import 'package:vtschool/screens/notas/Student_notas.dart';
 import 'package:vtschool/screens/notas/Task.dart';
 import 'package:vtschool/screens/profile/logout_screen.dart';
+import 'package:vtschool/screens/wompi/wompi_servise.dart';
 
 class PrincipalScreen extends StatefulWidget {
   const PrincipalScreen({super.key});
@@ -32,15 +33,15 @@ class _PrincipalScreenState extends State<PrincipalScreen>
   ]);
 
   List<Task> tasks = [
-    Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
-    Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
-    Task('Estudiar para el examen', 'Revisar apuntes de matemáticas'),
+    Task('Examen de Calculo', 'Revisar apuntes de Calculo'),
+    Task('Taller de Ingles', 'Revisar apuntes de  Ingles'),
+    Task('Tarea de Informatica', 'Revisar apuntes Informatica'),
   ];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     Future.delayed(
       const Duration(seconds: 2),
@@ -56,6 +57,16 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     });
   }
 
+ void _showInfoModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const BannerInfo();
+      },
+    );
+  }
+
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,9 +77,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {
-              
-            },
+            onPressed: () {},
           ),
         ],
       ),
@@ -96,7 +105,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                   ),
                   const SizedBox(height: 9),
                   Text(
-                    '${userProfile?.userData.email}', 
+                    '${userProfile?.userData.email}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -106,21 +115,20 @@ class _PrincipalScreenState extends State<PrincipalScreen>
               ),
             ),
             ListTile(
-              title: const Text('Medallero'),
-              leading: const Icon(Icons.emoji_events), // Icono de logout
+              title: const Text('pagos'),
+              leading: const Icon(Icons.wallet_rounded),
               onTap: () {
                 Get.toNamed('/banner');
               },
             ),
             ListTile(
               title: const Text('Cerrar sesión'),
-              leading: const Icon(Icons.exit_to_app), // Icono de logout
+              leading: const Icon(Icons.exit_to_app),
               onTap: () {
                 Get.back();
                 logoutApp(context);
               },
             ),
-            // Agrega más ListTile según sea necesario
           ],
         ),
       ),
@@ -187,14 +195,16 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                       ],
                     ),
                   ),
-                  // Second Tab - User Data Widget
                   userProfile != null
                       ? GradeSimulationScreen(student)
                       : const Center(child: CircularProgressIndicator()),
                   // You need to create UserDataWidget and pass userProfile
                   userProfile != null
                       ? TaskScreen(tasks)
-                      : const Center(child: CircularProgressIndicator()),
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        BannerInfo()
                 ],
               ),
             ),
@@ -216,19 +226,17 @@ class TabBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
-      dividerColor: Colors.white,
-      controller: _tabController,
-      tabs: const [
-        Tab(text: 'Agenda'),
-        Tab(text: 'Mis notas'),
-        Tab(text: 'Mis tareas'),
-      ],
-      labelColor:
-          Colors.black, 
-      unselectedLabelColor:
-          Colors.grey, 
-      labelStyle: kTlight, 
-      unselectedLabelStyle: kTlight
-    );
+        dividerColor: Colors.white,
+        controller: _tabController,
+        tabs: const [
+          Tab(text: 'Agenda'),
+          Tab(text: 'Mis notas'),
+          Tab(text: 'Mis tareas'),
+          Tab(text: 'Pagos'),
+        ],
+        labelColor: Colors.black,
+        unselectedLabelColor: Colors.grey,
+        labelStyle: kTlight,
+        unselectedLabelStyle: kTlight);
   }
 }
