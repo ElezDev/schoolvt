@@ -61,7 +61,7 @@ class _BannerScreenState extends State<BannerScreen> {
       customCloseButton: ElevatedButton(
         onPressed: () => Navigator.pop(context),
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
+          backgroundColor: Colors.blue,
         ),
         child: const Text(
           "Close",
@@ -125,7 +125,7 @@ class _BannerScreenState extends State<BannerScreen> {
     return ElevatedButton(
       onPressed: () => onClick(),
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue,
+        backgroundColor: Colors.blue,
       ),
       child: Text(
         title,

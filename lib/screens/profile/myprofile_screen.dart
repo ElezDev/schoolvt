@@ -1,11 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:vtschool/controllers/perfil_controller.dart';
 import 'package:vtschool/models/user_profile_model.dart';
 import 'package:vtschool/provider/theme_dark_or_light.dart';
-import 'package:vtschool/screens/profile/logout_screen.dart';
 import 'package:vtschool/widgets/custom_loading_screen.dart';
 import 'package:vtschool/config/fonts_styles.dart';
 

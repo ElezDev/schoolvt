@@ -1,107 +1,128 @@
-  import 'package:flutter/material.dart';
-  import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
 
-  class TuVista extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return BannerInfo();
-          },
-        );
-      });
+class PagosPage extends StatefulWidget {
+  const PagosPage({Key? key}) : super(key: key);
 
-      return Scaffold(
+  @override
+  _PagosPageState createState() => _PagosPageState();
+}
+
+class _PagosPageState extends State<PagosPage> {
+  Map<String, Map<String, dynamic>> _selectedProducts = {
+    'Carnet': {'selected': false, 'price': 100},
+    'Comida': {'selected': false, 'price': 150},
+    'Vicio': {'selected': false, 'price': 250},
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
-        title: Text('Pagos'),
+        title: const Text(''),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(16),
-                width: 350,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage('assets/images/avatar.png'),
-                    ),
-                    SizedBox(height: 10),
-
-                    Text(
-                      'Edwin Ledezma',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Número de Estudiante: 12345',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Text(
-                      'Carrera: Ingeniería Informática',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                'Pagos Pendientes',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            // Agrega cualquier otro contenido adicional aquí
+            DataTable(
+              columns: const [
+                DataColumn(
+                  label: Text(
+                    'Producto',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Método de Pago',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Seleccionar',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+              rows: _selectedProducts.keys.map((String producto) {
+                return DataRow(
+                  cells: [
+                    DataCell(
+                      Text(producto),
+                    ),
+                    DataCell(
+                      Row(
+                        children: [
+                          Image.asset('assets/images/pse.png',
+                              width: 40, height: 40),
+                          const SizedBox(width: 10),
+                          const Text('PSE'),
+                        ],
+                      ),
+                    ),
+                    DataCell(
+                      Checkbox(
+                        value: _selectedProducts[producto]!['selected'],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _selectedProducts[producto]!['selected'] = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                double total = 0; // Cambiar a double
+                _selectedProducts.forEach((producto, detalles) {
+                  if (detalles['selected']) {
+                    total += detalles['price']; // Simplemente sumar el precio
+                  }
+                });
+
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Total a pagar'),
+                      content:
+                          Text('El total seleccionado es: ${total.toString()}'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cerrar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Calcular Total'),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-
-  class BannerInfo extends StatelessWidget {
-    const BannerInfo({Key? key});
-
-    @override
-    Widget build(BuildContext context) {
-      return Dialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Tienes pagos pendientes',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 20), // Espacio entre el texto y el botón
-              ElevatedButton(
-                onPressed: () {
-                  // Agrega la lógica para navegar a la pantalla de pago
-                  // Puedes utilizar GoRouter o Navigator, dependiendo de tu implementación
-                  // Ejemplo con GoRouter:
-                  GoRouter.of(context).go('/pago');
-                  // Ejemplo con Navigator:
-                  // Navigator.pushNamed(context, '/pago');
-                },
-                child: Text('Ir a Pagar'),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-  }

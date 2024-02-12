@@ -64,7 +64,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 400,
       height: 475,
       child: Scaffold(
@@ -82,7 +82,6 @@ class _CalendarState extends State<Calendar> {
 
   CalendarDataSource<Object?> _getDataSource() {
     List<Appointment> appointments = [];
-
     for (var event in _hourlyEvents) {
       DateTime startTime = DateTime.parse('2024-02-12 ${event["horaInicial"]}');
       DateTime endTime = DateTime.parse('2024-02-12 ${event["horaFinal"]}');
@@ -121,7 +120,7 @@ class _CalendarState extends State<Calendar> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Detalle'),
+        title: const Text('Detalle'),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -135,7 +134,7 @@ class _CalendarState extends State<Calendar> {
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Cerrar'),
+            child: const Text('Cerrar'),
           ),
         ],
       ),

@@ -61,7 +61,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const BannerInfo();
+        return const PagosPage();
       },
     );
   }
@@ -70,13 +70,13 @@ class _PrincipalScreenState extends State<PrincipalScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 247, 233, 106),
+      backgroundColor: const Color.fromARGB(255, 247, 233, 106),
       appBar: AppBar(
         title: const Text(''),
-        backgroundColor: Color.fromARGB(255, 247, 233, 106),
+        backgroundColor: const Color.fromARGB(255, 247, 233, 106),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: () {},
           ),
         ],
@@ -204,7 +204,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                       : const Center(
                           child: CircularProgressIndicator(),
                         ),
-                        BannerInfo()
+                        const PagosPage()
                 ],
               ),
             ),

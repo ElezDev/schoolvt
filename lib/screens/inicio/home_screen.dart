@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:vtschool/screens/inicio/card_screen.dart';
 import '../profile/myprofile_screen.dart';
 import 'principal_screen.dart';
 
@@ -16,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const PrincipalScreen(),
-     MyProfileScreen(),
+     const MyProfileScreen(),
   ];
 
   @override
