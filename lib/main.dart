@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vtschool/Config/theme/app_theme.dart';
-import 'package:vtschool/Provider/theme_dark_or_light.dart';
+import 'package:vtschool/Src/Config/theme/app_theme.dart';
+import 'package:vtschool/Src/Provider/theme_dark_or_light.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/Screens/auth/Start_loading_screen.dart';
-import 'package:vtschool/Screens/auth/Starting_page.dart';
-import 'package:vtschool/Screens/auth/login_screen.dart';
-import 'package:vtschool/Screens/auth/register_screen.dart';
-import 'package:vtschool/Screens/inicio/home_screen.dart';
-import 'package:vtschool/Screens/profile/myprofile_screen.dart';
-import 'package:vtschool/Screens/profile/update_profile_screen.dart';
-import 'package:vtschool/Screens/wompi/card_credit.dart';
-import 'package:vtschool/Screens/wompi/wompi_servise.dart';
+import 'package:vtschool/Src/Screens/auth/Start_loading_screen.dart';
+import 'package:vtschool/Src/Screens/auth/Starting_page.dart';
+import 'package:vtschool/Src/Screens/auth/login_screen.dart';
+import 'package:vtschool/Src/Screens/auth/register_screen.dart';
+import 'package:vtschool/Src/Screens/inicio/home_screen.dart';
+import 'package:vtschool/Src/Screens/profile/myprofile_screen.dart';
+import 'package:vtschool/Src/Screens/profile/update_profile_screen.dart';
+import 'package:vtschool/Src/Screens/wompi/card_credit.dart';
+import 'package:vtschool/Src/Screens/wompi/wompi_servise.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

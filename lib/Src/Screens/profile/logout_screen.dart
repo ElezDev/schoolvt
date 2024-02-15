@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/Config/fonts_styles.dart';
-import 'package:vtschool/Services/auth_service.dart';
+import 'package:vtschool/Src/Config/fonts_styles.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> logoutApp(BuildContext context) async {

@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:vtschool/Screens/screens.dart';
+import 'package:vtschool/Src/Screens/screens.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/loading',

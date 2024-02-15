@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:vtschool/Api/constant.dart';
-import 'package:vtschool/Models/api_response_model.dart';
+import 'package:vtschool/Src/Api/constant.dart';
+import 'package:vtschool/Src/Models/api_response_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:vtschool/Models/auth_user_model.dart';
-import 'package:vtschool/Services/auth_service.dart';
+import 'package:vtschool/Src/Models/auth_user_model.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
 
 Future<ApiResponse> updateProfile({
   String? nombre1,

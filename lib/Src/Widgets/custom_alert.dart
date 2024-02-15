@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vtschool/Config/fonts_styles.dart';
+import 'package:vtschool/Src/Config/fonts_styles.dart';
 
 class CustomAlert extends StatelessWidget {
   final String title;

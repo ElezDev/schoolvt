@@ -1,11 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vtschool/Controllers/perfil_controller.dart';
-import 'package:vtschool/Models/user_profile_model.dart';
-import 'package:vtschool/Provider/theme_dark_or_light.dart';
-import 'package:vtschool/Widgets/custom_loading_screen.dart';
-import 'package:vtschool/Config/fonts_styles.dart';
+import 'package:vtschool/Src/Controllers/perfil_controller.dart';
+import 'package:vtschool/Src/Models/user_profile_model.dart';
+import 'package:vtschool/Src/Provider/theme_dark_or_light.dart';
+import 'package:vtschool/Src/Widgets/custom_loading_screen.dart';
+import 'package:vtschool/Src/Config/fonts_styles.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({Key? key}) : super(key: key);

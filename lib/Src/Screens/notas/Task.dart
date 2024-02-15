@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vtschool/Models/student.dart';
+import 'package:vtschool/Src/Models/student.dart';
 
 class TaskScreen extends StatelessWidget {
   final List<Task> tasks;

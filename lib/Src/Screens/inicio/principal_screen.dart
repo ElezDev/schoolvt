@@ -3,17 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:vtschool/Config/fonts_styles.dart';
-import 'package:vtschool/Controllers/perfil_controller.dart';
-import 'package:vtschool/Models/student.dart';
-import 'package:vtschool/Models/user_profile_model.dart';
-import 'package:vtschool/Screens/Calendar/calendar_screen.dart';
-import 'package:vtschool/Screens/notas/Student_notas.dart';
-import 'package:vtschool/Screens/notas/Task.dart';
-import 'package:vtschool/Screens/profile/logout_screen.dart';
-import 'package:vtschool/Screens/wompi/pay_screen.dart';
-import 'package:vtschool/Screens/wompi/wompi_servise.dart';
-import 'package:vtschool/Widgets/custom_alert.dart';
+import 'package:vtschool/Src/Config/fonts_styles.dart';
+import 'package:vtschool/Src/Controllers/perfil_controller.dart';
+import 'package:vtschool/Src/Models/student.dart';
+import 'package:vtschool/Src/Models/user_profile_model.dart';
+import 'package:vtschool/Src/Screens/Calendar/calendar_screen.dart';
+import 'package:vtschool/Src/Screens/notas/Student_notas.dart';
+import 'package:vtschool/Src/Screens/notas/Task.dart';
+import 'package:vtschool/Src/Screens/profile/logout_screen.dart';
+import 'package:vtschool/Src/Screens/wompi/pay_screen.dart';
+import 'package:vtschool/Src/Screens/wompi/wompi_servise.dart';
+import 'package:vtschool/Src/Widgets/custom_alert.dart';
 
 class PrincipalScreen extends StatefulWidget {
   const PrincipalScreen({super.key});

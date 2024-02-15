@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:vtschool/Api/constant.dart';
-import 'package:vtschool/Models/api_response_model.dart';
+import 'package:vtschool/Src/Api/constant.dart';
+import 'package:vtschool/Src/Models/api_response_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:vtschool/Models/message_service_model.dart';
-import 'package:vtschool/Models/services_model.dart';
-import 'package:vtschool/Services/auth_service.dart';
+import 'package:vtschool/Src/Models/message_service_model.dart';
+import 'package:vtschool/Src/Models/services_model.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Pedir un servicio

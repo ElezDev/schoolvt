@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:vtschool/Models/api_response_model.dart';
-import 'package:vtschool/Models/user_profile_model.dart';
-import 'package:vtschool/Services/update_profile_user.dart';
-import 'package:vtschool/Services/auth_service.dart';
-import 'package:vtschool/Widgets/custom_loading_screen.dart';
-import 'package:vtschool/Config/fonts_styles.dart';
+import 'package:vtschool/Src/Models/api_response_model.dart';
+import 'package:vtschool/Src/Models/user_profile_model.dart';
+import 'package:vtschool/Src/Services/update_profile_user.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
+import 'package:vtschool/Src/Widgets/custom_loading_screen.dart';
+import 'package:vtschool/Src/Config/fonts_styles.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);

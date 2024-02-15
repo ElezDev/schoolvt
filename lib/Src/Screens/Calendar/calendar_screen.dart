@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:vtschool/Services/auth_service.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);

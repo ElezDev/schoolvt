@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:vtschool/Services/auth_service.dart';
+import 'package:vtschool/Src/Services/auth_service.dart';
 
 class UserDataWidget extends StatefulWidget {
   const UserDataWidget({super.key});
