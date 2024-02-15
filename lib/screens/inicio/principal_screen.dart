@@ -7,11 +7,13 @@ import 'package:vtschool/config/fonts_styles.dart';
 import 'package:vtschool/controllers/perfil_controller.dart';
 import 'package:vtschool/models/student.dart';
 import 'package:vtschool/models/user_profile_model.dart';
-import 'package:vtschool/screens/inicio/card_screen.dart';
+import 'package:vtschool/screens/Calendar/calendar_screen.dart';
 import 'package:vtschool/screens/notas/Student_notas.dart';
 import 'package:vtschool/screens/notas/Task.dart';
 import 'package:vtschool/screens/profile/logout_screen.dart';
+import 'package:vtschool/screens/wompi/pay_screen.dart';
 import 'package:vtschool/screens/wompi/wompi_servise.dart';
+import 'package:vtschool/widgets/custom_alert.dart';
 
 class PrincipalScreen extends StatefulWidget {
   const PrincipalScreen({super.key});
@@ -26,11 +28,6 @@ class _PrincipalScreenState extends State<PrincipalScreen>
   bool isLoading = true;
   final ProfileController _profileController = ProfileController();
   late TabController _tabController;
-  Student student = Student('Juan', [
-    Grade('Matemáticas', 90.0),
-    Grade('Historia', 85.0),
-    Grade('Ciencias', 95.0),
-  ]);
 
   List<Task> tasks = [
     Task('Examen de Calculo', 'Revisar apuntes de Calculo'),
@@ -46,8 +43,10 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     Future.delayed(
       const Duration(seconds: 2),
       () {
+        showDialogPay();
         _profileController.fetchAndSetProfileData(getProfileData);
       },
+    
     );
   }
 
@@ -57,7 +56,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     });
   }
 
- void _showInfoModal(BuildContext context) {
+  void _showInfoModal(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -66,14 +65,26 @@ class _PrincipalScreenState extends State<PrincipalScreen>
     );
   }
 
- 
+  void showDialogPay() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlert(
+          title: 'Hola!!!',
+          subtitle: ' Recuerde que su pensión  esta vencida.',
+          imagePath: 'assets/images/Warning.png',
+          color:Color(0xFFFFC502),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 247, 233, 106),
+      backgroundColor: const Color(0xFFFFC502),
       appBar: AppBar(
         title: const Text(''),
-        backgroundColor: const Color.fromARGB(255, 247, 233, 106),
+        backgroundColor: const Color(0xFFFFC502),
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications),
@@ -86,7 +97,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
           children: [
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 247, 230, 76),
+                color: const Color(0xFFFFC502),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +207,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                     ),
                   ),
                   userProfile != null
-                      ? GradeSimulationScreen(student)
+                      ? const StudentPage()
                       : const Center(child: CircularProgressIndicator()),
                   // You need to create UserDataWidget and pass userProfile
                   userProfile != null
@@ -204,7 +215,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                       : const Center(
                           child: CircularProgressIndicator(),
                         ),
-                        const PagosPage()
+                  PagosPage()
                 ],
               ),
             ),

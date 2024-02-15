@@ -10,6 +10,7 @@ import 'package:vtschool/screens/auth/register_screen.dart';
 import 'package:vtschool/screens/inicio/home_screen.dart';
 import 'package:vtschool/screens/profile/myprofile_screen.dart';
 import 'package:vtschool/screens/profile/update_profile_screen.dart';
+import 'package:vtschool/screens/wompi/card_credit.dart';
 import 'package:vtschool/screens/wompi/wompi_servise.dart';
 
 void main() {
@@ -38,6 +39,7 @@ class MyApp extends ConsumerWidget {
         GetPage(name: '/profile_view', page: () => const MyProfileScreen()),
         GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
         GetPage(name: '/banner', page: () =>  const PagosPage()),
+        GetPage(name: '/creditCart', page: () =>  const MySample()),
 
       ],
       initialRoute: '/loading',

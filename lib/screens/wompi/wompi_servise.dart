@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PagosPage extends StatefulWidget {
   const PagosPage({Key? key}) : super(key: key);
@@ -8,10 +9,10 @@ class PagosPage extends StatefulWidget {
 }
 
 class _PagosPageState extends State<PagosPage> {
-  Map<String, Map<String, dynamic>> _selectedProducts = {
-    'Carnet': {'selected': false, 'price': 100},
-    'Comida': {'selected': false, 'price': 150},
-    'Vicio': {'selected': false, 'price': 250},
+  final Map<String, Map<String, dynamic>> _selectedProducts = {
+    'Carnet': {'selected': false, 'price': 10000},
+    'Comida': {'selected': false, 'price': 20000},
+    'Material': {'selected': false, 'price': 1000},
   };
 
   @override
@@ -33,69 +34,71 @@ class _PagosPageState extends State<PagosPage> {
                 ),
               ),
             ),
-            DataTable(
-              columns: const [
-                DataColumn(
-                  label: Text(
-                    'Producto',
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'Método de Pago',
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'Seleccionar',
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-              rows: _selectedProducts.keys.map((String producto) {
-                return DataRow(
-                  cells: [
-                    DataCell(
-                      Text(producto),
-                    ),
-                    DataCell(
-                      Row(
-                        children: [
-                          Image.asset('assets/images/pse.png',
-                              width: 40, height: 40),
-                          const SizedBox(width: 10),
-                          const Text('PSE'),
-                        ],
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                    color: Colors.grey), // Define el borde con el color negro
+              ),
+              child: DataTable(
+                headingRowColor:
+                    MaterialStateColor.resolveWith((states) => Colors.grey),
+                columns: const [
+                  DataColumn(
+                    label: Text(
+                      'Producto',
+                      style: TextStyle(
+                        fontSize: 12,
                       ),
                     ),
-                    DataCell(
-                      Checkbox(
-                        value: _selectedProducts[producto]!['selected'],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _selectedProducts[producto]!['selected'] = value!;
-                          });
-                        },
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Precio',
+                      style: TextStyle(
+                        fontSize: 12,
                       ),
                     ),
-                  ],
-                );
-              }).toList(),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'Seleccionar',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+                rows: _selectedProducts.keys.map((String producto) {
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        Text(producto),
+                      ),
+                      DataCell(
+                        Text(
+                            '\$${_selectedProducts[producto]!['price']} COP'), // Mostrar el precio dinámicamente
+                      ),
+                      DataCell(
+                        Checkbox(
+                          value: _selectedProducts[producto]!['selected'],
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _selectedProducts[producto]!['selected'] = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
-                double total = 0; // Cambiar a double
+                double total = 0;
                 _selectedProducts.forEach((producto, detalles) {
                   if (detalles['selected']) {
-                    total += detalles['price']; // Simplemente sumar el precio
+                    total += detalles['price'];
                   }
                 });
 
@@ -107,6 +110,12 @@ class _PagosPageState extends State<PagosPage> {
                       content:
                           Text('El total seleccionado es: ${total.toString()}'),
                       actions: [
+                        TextButton(
+                          onPressed: () {
+                          Get.toNamed('/creditCart');
+                          },
+                          child: const Text('Ir a pagar'),
+                        ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
