@@ -46,7 +46,6 @@ class _PrincipalScreenState extends State<PrincipalScreen>
         showDialogPay();
         _profileController.fetchAndSetProfileData(getProfileData);
       },
-    
     );
   }
 
@@ -73,15 +72,16 @@ class _PrincipalScreenState extends State<PrincipalScreen>
           title: 'Hola!!!',
           subtitle: ' Recuerde que su pensión  esta vencida.',
           imagePath: 'assets/images/Warning.png',
-          color:Color(0xFFFFC502),
+          color: Color(0xFFFFC502),
         );
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFC502),
+      backgroundColor:const Color(0xFFFFC502),
       appBar: AppBar(
         title: const Text(''),
         backgroundColor: const Color(0xFFFFC502),
@@ -140,6 +140,7 @@ class _PrincipalScreenState extends State<PrincipalScreen>
                 logoutApp(context);
               },
             ),
+           
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:vtschool/Src/Provider/theme_dark_or_light.dart';
 import 'package:get/get.dart';
 import 'package:vtschool/Src/Screens/auth/Start_loading_screen.dart';
 import 'package:vtschool/Src/Screens/auth/Starting_page.dart';
+import 'package:vtschool/Src/Screens/auth/loginNew.dart';
 import 'package:vtschool/Src/Screens/auth/login_screen.dart';
 import 'package:vtschool/Src/Screens/auth/register_screen.dart';
 import 'package:vtschool/Src/Screens/inicio/home_screen.dart';
@@ -40,6 +41,8 @@ class MyApp extends ConsumerWidget {
         GetPage(name: '/update_profile', page: () => const UpdateProfileScreen()),
         GetPage(name: '/banner', page: () =>  const PagosPage()),
         GetPage(name: '/creditCart', page: () =>  const MySample()),
+        GetPage(name: '/loginnew', page: () =>  const LoginNew()),
+
 
       ],
       initialRoute: '/loading',
