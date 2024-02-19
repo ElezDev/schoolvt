@@ -28,7 +28,7 @@ class UserDataClass {
     int id;
     String email;
     int idPersona;
-    DateTime? emailVerifiedAt;
+    DateTime emailVerifiedAt;
     Persona persona;
 
     UserDataClass({
@@ -39,23 +39,19 @@ class UserDataClass {
         required this.persona,
     });
 
- factory UserDataClass.fromJson(Map<String, dynamic> json) {
-  return UserDataClass(
-    id: json["id"],
-    email: json["email"],
-    idPersona: json["idPersona"],
-    emailVerifiedAt: json["email_verified_at"] != null
-        ? DateTime.parse(json["email_verified_at"])
-        : null,
-    persona: Persona.fromJson(json["persona"]),
-  );
-}
+    factory UserDataClass.fromJson(Map<String, dynamic> json) => UserDataClass(
+        id: json["id"],
+        email: json["email"],
+        idPersona: json["idPersona"],
+        emailVerifiedAt: DateTime.parse(json["email_verified_at"]),
+        persona: Persona.fromJson(json["persona"]),
+    );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
         "idPersona": idPersona,
-        "email_verified_at": emailVerifiedAt?.toIso8601String(),
+        "email_verified_at": emailVerifiedAt.toIso8601String(),
         "persona": persona.toJson(),
     };
 }
@@ -82,6 +78,8 @@ class Persona {
     DateTime createdAt;
     DateTime updatedAt;
     String rutaFotoUrl;
+    Ciudad ciudadUbicacion;
+    Ciudad ciudadNac;
 
     Persona({
         required this.id,
@@ -105,6 +103,8 @@ class Persona {
         required this.createdAt,
         required this.updatedAt,
         required this.rutaFotoUrl,
+        required this.ciudadUbicacion,
+        required this.ciudadNac,
     });
 
     factory Persona.fromJson(Map<String, dynamic> json) => Persona(
@@ -129,6 +129,8 @@ class Persona {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         rutaFotoUrl: json["rutaFotoUrl"],
+        ciudadUbicacion: Ciudad.fromJson(json["ciudad_ubicacion"]),
+        ciudadNac: Ciudad.fromJson(json["ciudad_nac"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -153,5 +155,43 @@ class Persona {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "rutaFotoUrl": rutaFotoUrl,
+        "ciudad_ubicacion": ciudadUbicacion.toJson(),
+        "ciudad_nac": ciudadNac.toJson(),
+    };
+}
+
+class Ciudad {
+    int id;
+    String codigo;
+    String descripcion;
+    int idDepartamento;
+    dynamic createdAt;
+    dynamic updatedAt;
+
+    Ciudad({
+        required this.id,
+        required this.codigo,
+        required this.descripcion,
+        required this.idDepartamento,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    factory Ciudad.fromJson(Map<String, dynamic> json) => Ciudad(
+        id: json["id"],
+        codigo: json["codigo"],
+        descripcion: json["descripcion"],
+        idDepartamento: json["idDepartamento"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "codigo": codigo,
+        "descripcion": descripcion,
+        "idDepartamento": idDepartamento,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
     };
 }

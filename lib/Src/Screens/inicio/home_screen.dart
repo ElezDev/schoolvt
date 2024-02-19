@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:vtschool/Src/Screens/profile/data_prueba.dart';
+import 'package:vtschool/Src/Screens/profile/update_profile_screen.dart';
 import '../profile/myprofile_screen.dart';
 import 'principal_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, });
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -15,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const PrincipalScreen(),
-     const MyProfileScreen(),
+    const MyProfileScreen(),
+    UpdateProfileScreen()
   ];
 
   @override
@@ -49,6 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
         BottomNavigationBarItem(
           icon: Icon(LineIcons.user),
           label: 'Perfil',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(LineIcons.database),
+          label: 'Datos',
         ),
       ],
     );

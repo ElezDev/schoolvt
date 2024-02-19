@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:vtschool/Src/Api/constant.dart';
 import 'package:vtschool/Src/Models/api_response_model.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +10,7 @@ Future<ApiResponse> updateProfile({
   String? nombre2,
   String? apellido1,
   String? apellido2,
-  String? celular,
-  File? rutaFotoFile,
+  String? idCiudadUbicacion,
 }) async {
   ApiResponse apiResponse = ApiResponse();
   try {
@@ -23,21 +21,22 @@ Future<ApiResponse> updateProfile({
     if (nombre2 != null) requestBody["nombre2"] = nombre2;
     if (apellido1 != null) requestBody["apellido1"] = apellido1;
     if (apellido2 != null) requestBody["apellido2"] = apellido2;
-    if (celular != null) requestBody["celular"] = celular;
-    if (rutaFotoFile != null) requestBody["rutaFotoFile"] = rutaFotoFile;
+    if (idCiudadUbicacion != null) requestBody["idCiudadUbicacion"] = idCiudadUbicacion;
 
-    //print('2 $requestBody');
 
     http.Response response = await http.post(Uri.parse(urlUpdateProfile),
         headers: {
-          'Accept': 'application/json',
+         
           'Authorization': 'Bearer $token'
         },
         body: requestBody);
 
+        print('RequestBody: $requestBody');
+
+
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = UserAuth.fromJson(jsonDecode(response.body));
+        apiResponse.data = User.fromJson(jsonDecode(response.body));
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];
@@ -55,62 +54,8 @@ Future<ApiResponse> updateProfile({
         apiResponse.error = somethingWentWrong;
         break;
     }
-  } catch (e) {
-    apiResponse.error = serverError;
-  }
-  return apiResponse;
-}
+    print('Response status code: ${response.statusCode}');
 
-Future<ApiResponse> updatePhotoProfile({
-  File? rutaFotoFile,
-}) async {
-  ApiResponse apiResponse = ApiResponse();
-  try {
-    String token = await getToken();
-
-    var request = http.MultipartRequest('POST', Uri.parse(urlUpdateProfile));
-
-    if (rutaFotoFile != null) {
-      var fileStream = http.ByteStream.fromBytes(rutaFotoFile.readAsBytesSync());
-      var length = await rutaFotoFile.length();
-      var multipartFile = http.MultipartFile('rutaFotoFile', fileStream, length,
-          filename: rutaFotoFile.path.split('/').last);
-      request.files.add(multipartFile);
-    }
-
-    request.headers.addAll({
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-
-    var response = await request.send();
-
-    var responseString = await response.stream.bytesToString();
-
-    switch (response.statusCode) {
-      case 200:
-        apiResponse.data = UserAuth.fromJson(jsonDecode(responseString));
-        break;
-      case 422:
-        final errors = jsonDecode(responseString)['errors'];
-        apiResponse.error = errors[errors.keys.elementAt(0)][0];
-
-        break;
-      case 401:
-
-        break;
-      case 403:
-        apiResponse.error = jsonDecode(responseString)['message'];
-
-        break;
-      case 500:
-        apiResponse.error = jsonDecode(responseString)['message'];
-     
-        break;
-      default:
-        apiResponse.error = somethingWentWrong;
-        break;
-    }
   } catch (e) {
     apiResponse.error = serverError;
   }

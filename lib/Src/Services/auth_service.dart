@@ -24,7 +24,7 @@ Future<ApiResponse> login(String email, String contrasena) async {
 
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = UserAuth.fromJson(jsonDecode(response.body));
+        apiResponse.data = User.fromJson(jsonDecode(response.body));
         print(response.body);
         break;
       case 422:
@@ -74,7 +74,7 @@ Future<ApiResponse> register(
 
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = UserAuth.fromJson(jsonDecode(response.body));
+        apiResponse.data = User.fromJson(jsonDecode(response.body));
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];
@@ -99,7 +99,7 @@ Future<ApiResponse> logout() async {
 
     switch (response.statusCode) {
       case 200:
-        apiResponse.data = UserAuth.fromJson(jsonDecode(response.body));
+        apiResponse.data = User.fromJson(jsonDecode(response.body));
         break;
       case 422:
         final errors = jsonDecode(response.body)['errors'];
@@ -119,30 +119,6 @@ Future<ApiResponse> logout() async {
   return apiResponse;
 }
 
-// Future<ApiResponse> getUserDetail() async {
-//   ApiResponse apiResponse = ApiResponse();
-//   try {
-//     String token = await getToken();
-//     final response = await http.get(Uri.parse(userURL), headers: {
-//       'Authorization': 'Bearer $token'
-//     });
-
-//     switch (response.statusCode) {
-//       case 200:
-//         apiResponse.data = UserData.fromJson(jsonDecode(response.body));
-//         break;
-//       case 401:
-//         apiResponse.error = unauthorized;
-//         break;
-//       default:
-//         apiResponse.error = somethingWentWrong;
-//         break;
-//     }
-//   } catch (e) {
-//     apiResponse.error = serverError;
-//   }
-//   return apiResponse;
-// }
 
 // get token
 Future<String> getToken() async {
@@ -157,10 +133,10 @@ Future<int> getUserId() async {
 }
 
 // Get base64 encoded image
-String? getStringImage(File? file) {
-  if (file == null) return null;
-  return base64Encode(file.readAsBytesSync());
-}
+// String? getStringImage(File? file) {
+//   if (file == null) return null;
+//   return base64Encode(file.readAsBytesSync());
+// }
 
   Future<ApiResponse> getProfile() async {
   ApiResponse apiResponse = ApiResponse();

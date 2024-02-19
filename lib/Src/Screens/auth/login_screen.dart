@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
 
   void _loginUser() async {
-    _showLoginAlert(context);
+  
     ApiResponse response = await login(txtEmail.text, txtPassword.text);
 
     if (response.error == null) {
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = true;
       });
-      _saveAndRedirectToHome(response.data as UserAuth);
+      _saveAndRedirectToHome(response.data as User);
     } else {
       Fluttertoast.showToast(
         msg: 'Correo o contraseña incorrectos',
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _saveAndRedirectToHome(UserAuth user) async {
+  void _saveAndRedirectToHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token', user.token);
     await pref.setString('email', txtEmail.text);
@@ -210,30 +210,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _showLoginAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            'Iniciando sesión',
-            style: kTlightproMax,
-          ),
-          content: const Row(
-            children: <Widget>[
-              CircularProgressIndicator(),
-              SizedBox(width: 20),
-              Text(
-                'Por favor, espera un momento...',
-                style: kTlight,
-              ),
-            ],
-          ),
-          actions: [],
-        );
-      },
-    );
-  }
 }
+
+//   void _showLoginAlert(BuildContext context) {
+//     showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           backgroundColor: Colors.white,
+//           title: Text(
+//             'Iniciando sesión',
+//             style: kTlightproMax,
+//           ),
+//           content: const Row(
+//             children: <Widget>[
+//               CircularProgressIndicator(),
+//               SizedBox(width: 20),
+//               Text(
+//                 'Por favor, espera un momento...',
+//                 style: kTlight,
+//               ),
+//             ],
+//           ),
+//           actions: [],
+//         );
+//       },
+//     );
+//   }
+// }

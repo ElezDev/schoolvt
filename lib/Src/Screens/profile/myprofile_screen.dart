@@ -159,6 +159,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               '${userProfile?.userData.persona.email}',
                               style: kTlight,
                             ),
+
                           ],
                         ),
                       ],
@@ -190,11 +191,22 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           '${userProfile?.userData.persona.celular}',
                         ),
                         const SizedBox(height: 10),
-                        const SizedBox(height: 10),
                         buildTextFieldWithIcon(
                           "Documento",
                           Icons.badge_outlined,
                           '${userProfile?.userData.persona.identificacion}',
+                        ),
+                        const SizedBox(height: 10),
+                        buildTextFieldWithIcon(
+                          "Ciudad de nacimiento",
+                          Icons.badge_outlined,
+                          '${userProfile?.userData.persona.ciudadNac.descripcion}',
+                        ),
+                       const SizedBox(height: 10),
+                        buildTextFieldWithIcon(
+                          "Ciudad actual",
+                          Icons.location_city,
+                          '${userProfile?.userData.persona.ciudadUbicacion.descripcion}',
                         ),
                       ],
                     ),
@@ -203,11 +215,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   Widget buildTextFieldWithIcon(String label, IconData icon, String value) {
@@ -249,27 +256,5 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }
 }
 
-class IconThemoMode extends ConsumerWidget {
-  const IconThemoMode({super.key});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final bool isDarkmode = ref.watch(isDarkmodeProvider);
-    return ElevatedButton(
-      onPressed: () {
-        ref
-            .read(isDarkmodeProvider.notifier)
-            .update((isDarkmode) => !isDarkmode);
-      },
-      child: Row(
-        children: [
-          Icon(isDarkmode ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
-          const SizedBox(
-            width: 5,
-          ),
-          const Text('Tema'),
-        ],
-      ),
-    );
-  }
-}
+

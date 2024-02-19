@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, file_names, use_build_context_synchronously
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:vtschool/Src/Models/api_response_model.dart';
+import 'package:vtschool/Src/Models/ciudad_model.dart';
 import 'package:vtschool/Src/Models/user_profile_model.dart';
+import 'package:vtschool/Src/Services/ciudad_service.dart';
 import 'package:vtschool/Src/Services/update_profile_user.dart';
 import 'package:vtschool/Src/Services/auth_service.dart';
 import 'package:vtschool/Src/Widgets/custom_loading_screen.dart';
@@ -30,10 +30,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   TextEditingController txtApellido2 = TextEditingController();
   TextEditingController txtTelefono = TextEditingController();
 
+  List<Ciudad> ciudades = [];
+  Ciudad? selectedCiudad;
+
   @override
   void initState() {
     super.initState();
     fetchProfileData();
+    fetchCiudadesFromAPI();
+  }
+
+  Future<void> fetchCiudadesFromAPI() async {
+    try {
+      List<Ciudad> fetchedCiudades = await fetchCiudades();
+      setState(() {
+        ciudades = fetchedCiudades;
+      });
+    } catch (e) {
+      print('Error fetching ciudades: $e');
+    }
   }
 
   Future<void> fetchProfileData() async {
@@ -48,7 +63,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           txtNombre2.text = userProfile?.userData.persona.nombre2 ?? '';
           txtApellido1.text = userProfile?.userData.persona.apellido1 ?? '';
           txtApellido2.text = userProfile?.userData.persona.apellido2 ?? '';
-          txtTelefono.text = userProfile?.userData.persona.celular ?? '';
+
           isLoading = false;
         },
       );
@@ -57,7 +72,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final picker = ImagePicker();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 234, 231, 71),
@@ -114,344 +128,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        Positioned(
-                                          right: 5,
-                                          bottom: 5,
-                                          child: InkWell(
-                                              onTap: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.photo_library,
-                                                            size: 38,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    234,
-                                                                    231,
-                                                                    71),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
-                                                      ),
-                                                      content: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal:
-                                                                    16.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            ListTile(
-                                                              leading:
-                                                                  const Icon(
-                                                                Icons
-                                                                    .photo_camera,
-                                                                size: 32,
-                                                              ),
-                                                              title: const Text(
-                                                                'Tomar foto',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              onTap: () async {
-                                                                XFile?
-                                                                    selectedImage =
-                                                                    await picker
-                                                                        .pickImage(
-                                                                  source:
-                                                                      ImageSource
-                                                                          .camera,
-                                                                );
-                                                                if (selectedImage !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    imageSelected =
-                                                                        true;
-                                                                    selectedImages =
-                                                                        File(selectedImage
-                                                                            .path);
-                                                                  });
-                                                                }
-                                                                context.pop();
-                                                              },
-                                                            ),
-                                                            ListTile(
-                                                              leading:
-                                                                  const Icon(
-                                                                Icons
-                                                                    .photo_outlined,
-                                                                size: 32,
-                                                              ),
-                                                              title: const Text(
-                                                                'Galería',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              onTap: () async {
-                                                                XFile?
-                                                                    selectedImage =
-                                                                    await picker
-                                                                        .pickImage(
-                                                                  source:
-                                                                      ImageSource
-                                                                          .gallery,
-                                                                );
-                                                                if (selectedImage !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    imageSelected =
-                                                                        true;
-                                                                    selectedImages =
-                                                                        File(selectedImage
-                                                                            .path);
-                                                                  });
-                                                                }
-
-                                                                context.pop();
-                                                              },
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 16.0),
-                                                            Container(
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    234,
-                                                                    231,
-                                                                    71),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            32),
-                                                              ),
-                                                              child: TextButton(
-                                                                onPressed: () {
-                                                                  context.pop();
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                  'Cancelar',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              child: Image.asset(
-                                                "assets/images/camera.png",
-                                                width: 25,
-                                              )),
-                                        ),
                                       ],
-                                    ))
+                                    ),
+                                  )
                                 : CircleAvatar(
                                     radius: 80,
                                     backgroundColor:
                                         const Color.fromRGBO(0, 0, 0, 1),
-                                    backgroundImage: isLoading
-                                        ? null
-                                        : NetworkImage(getImageUrl()),
+                                    backgroundImage:
+                                        isLoading ? null : NetworkImage(''),
                                     child: Stack(
                                       alignment: Alignment.bottomRight,
-                                      children: [
-                                        Positioned(
-                                          right: 5,
-                                          bottom: 5,
-                                          child: InkWell(
-                                              onTap: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.photo_library,
-                                                            size: 38,
-                                                            color:
-                                                                Color.fromARGB(
-                                                              255,
-                                                              234,
-                                                              231,
-                                                              71,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          30,
-                                                        ),
-                                                      ),
-                                                      content: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal:
-                                                                    16.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: <Widget>[
-                                                            ListTile(
-                                                              leading:
-                                                                  const Icon(
-                                                                Icons
-                                                                    .photo_camera,
-                                                                size: 32,
-                                                              ),
-                                                              title: const Text(
-                                                                'Tomar foto',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              onTap: () async {
-                                                                XFile?
-                                                                    selectedImage =
-                                                                    await picker
-                                                                        .pickImage(
-                                                                  source:
-                                                                      ImageSource
-                                                                          .camera,
-                                                                );
-                                                                if (selectedImage !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    imageSelected =
-                                                                        true;
-                                                                    selectedImages =
-                                                                        File(selectedImage
-                                                                            .path);
-                                                                  });
-                                                                }
-                                                                context.pop();
-                                                              },
-                                                            ),
-                                                            ListTile(
-                                                              leading:
-                                                                  const Icon(
-                                                                Icons
-                                                                    .photo_outlined,
-                                                                size: 32,
-                                                              ),
-                                                              title: const Text(
-                                                                'Galería',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              onTap: () async {
-                                                                XFile?
-                                                                    selectedImage =
-                                                                    await picker
-                                                                        .pickImage(
-                                                                  source:
-                                                                      ImageSource
-                                                                          .gallery,
-                                                                );
-                                                                if (selectedImage !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    imageSelected =
-                                                                        true;
-                                                                    selectedImages =
-                                                                        File(selectedImage
-                                                                            .path);
-                                                                  });
-                                                                }
-
-                                                                context.pop();
-                                                              },
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 16.0),
-                                                            Container(
-                                                              width: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    234,
-                                                                    231,
-                                                                    71),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            32),
-                                                              ),
-                                                              child: TextButton(
-                                                                onPressed: () {
-                                                                  context.pop();
-                                                                },
-                                                                child:
-                                                                    const Text(
-                                                                  'Cancelar',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              child: Image.asset(
-                                                "assets/images/camera.png",
-                                                width: 25,
-                                              )),
-                                        ),
-                                      ],
+                                      children: [],
                                     ),
                                   ),
                           ),
@@ -547,23 +235,30 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          buildTextFieldWithIcon(
-                            'Telefono',
-                            Icons.phone,
-                            SizedBox(
-                              width: 250,
-                              child: TextFormField(
-                                decoration: kInputDecoration2(),
-                                controller: txtTelefono,
-                                autocorrect: true,
-                                textCapitalization: TextCapitalization.words,
-                                keyboardType: TextInputType.phone,
-                                maxLength: 10,
-                                validator: (val) => val!.length < 10
-                                    ? 'El telfono debe tener 10 caracteres'
-                                    : null,
-                              ),
-                            ),
+                          DropdownButtonFormField<Ciudad>(
+                            value: selectedCiudad ??
+                                ciudades.firstWhere(
+                                    (ciudad) =>
+                                        ciudad.id ==
+                                        userProfile?.userData.persona
+                                            .ciudadUbicacion.id,
+                                    orElse: () => ciudades.first),
+                            onChanged: (Ciudad? newValue) {
+                              setState(() {
+                                selectedCiudad = newValue;
+                                // Aquí puedes imprimir el ID de la ciudad seleccionada
+                                if (newValue != null) {
+                                  print(
+                                      'ID de la ciudad seleccionada: ${newValue.id}');
+                                }
+                              });
+                            },
+                            items: ciudades.map((ciudad) {
+                              return DropdownMenuItem<Ciudad>(
+                                value: ciudad,
+                                child: Text(ciudad.descripcion),
+                              );
+                            }).toList(),
                           ),
                           const SizedBox(
                             height: 15,
@@ -591,18 +286,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                     );
                                   },
                                 );
-                                await Future.delayed(
+                                           await Future.delayed(
                                     const Duration(seconds: 3));
-                                context.go('/home');
-                                await updateProfile(
+
+                                int? ciudadId = selectedCiudad?.id;
+
+                                updateProfile(
                                   nombre1: txtNombre1.text,
                                   nombre2: txtNombre2.text,
                                   apellido1: txtApellido1.text,
                                   apellido2: txtApellido2.text,
-                                  celular: txtTelefono.text,
+                                  idCiudadUbicacion: ciudadId.toString(),
                                 );
-                                await updatePhotoProfile(
-                                    rutaFotoFile: selectedImages);
+                             
+
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
                               }
                             },
                             child: const Text('Guardar'),
@@ -615,19 +314,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               ),
       ),
     );
-  }
-
-  String getImageUrl() {
-    if (imageSelected && selectedImages != null) {
-      return selectedImages!.path;
-    } else {
-      return userProfile?.userData.persona.rutaFotoUrl ?? '';
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   Widget buildTextFieldWithIcon(String label, IconData icon, SizedBox value) {

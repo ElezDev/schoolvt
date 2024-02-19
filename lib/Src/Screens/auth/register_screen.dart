@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           });
           Alert.snacbarSuccess(
               context: context, title: 'Registrado', message: '¡Bienvenido!');
-          _saveAndRedirectToHome(response.data as UserAuth);
+          _saveAndRedirectToHome(response.data as User);
         } else {
           Alert.snacbarError(
               context: context,
@@ -77,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  void _saveAndRedirectToHome(UserAuth user) async {
+  void _saveAndRedirectToHome(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token', user.token);
     await pref.setString('email', txtEmail.text);
